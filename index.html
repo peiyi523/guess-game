@@ -57,36 +57,60 @@
     <div id="result"></div>
     <button id="restart">重新開始</button>
     <h3 id="guess-count"></h3>
+    <hr>
+    <div style="background-color: aqua; color:rgb(34, 145, 145);">遊戲記錄:</div>
+    < <div>時間:2024/4/5<br>遊戲結果:猜對了!<br>次數:5次</div>
+        <hr>
+        <div>時間:2024/4/5<br>遊戲結果:猜對了!<br>次數:5次</div>
 
-    <script>
+        <script>
+            function showRecords() {
+                for (let i = 0; i < records.length; i++) {
+                    recordsEl.innerHTML += 1
+                        < hr >
+                        <div>時間:${records[i][0]}<br>
+                            遊戲結果:${records[i][1]}<br>
+                                次數:${records[i][2]}次</div>
+                            `;
+            }
 
-        function answer() {
+        }
+
+                            function answer() {
             if (count == maxCount) {
-                resultEl.innerHTML = "請重新開始";
+                                resultEl.innerHTML = "請重新開始";
+                            restartBtnEl.didabled = false;
+                            return;
+            }
+                            let number = numberEl.value;
+                            // 輸入不能為空
+                            if (number == "") {
+                                resultEl.innerHTML = "輸入不能為空<br>"
                 return;
             }
-            let number = numberEl.value;
-            // 輸入不能為空
-            if (number == "") {
-                resultEl.innerHTML = "輸入不能為空<br>"
+                            // 輸入要在1~50之間
+                            if (number < 1 || number > 50) {
+                                resultEl.innerHTML = "輸入要在1~50之間<br>"
                 return;
             }
-            // 輸入要在1~50之間
-            if (number < 1 || number > 50) {
-                resultEl.innerHTML = "輸入要在1~50之間<br>"
-                return;
-            }
-            // 程式練習
-            count++;
+                            // 程式練習
+                            count++;
 
-            // 判斷是否猜對
-            if (number == computer) {
-                resultEl.innerHTML = "猜對了!<br>";
-                if (count == maxCount) {
-                    resultEl.innerHTML = `遊戲結束<br>答案為:${computer}`;
-                }
+                            // 判斷是否猜對
+                            if (number == computer) {
+                                resultEl.innerHTML = "猜對了!";
+                            restartBtnEl.disabled = false;
+                            records.push([new Date().toLocaleString()]);
+
             } else {
-                guessCountEl.innerHTML = `猜錯${count}次`;
+                                guessCountEl.innerHTML = `猜錯${count}次`;
+                            if (count == maxCount)
+                            resultEl.innerHTML = `結束` < br > 答案為:${computer}`;
+                    resultEl.innerHTML+="<br>重新開始";
+                    restarBtnEl.disabled=false;
+
+
+                }
 
                 if (number > computer) {
                     resultEl.innerHTML = "猜低一點!<br>";
@@ -101,6 +125,9 @@
         const resultEl = document.querySelector("#result")
         const gessCountEl = document.querySelector("#guess-count")
         const restartBtnEl = document.querySelector("#restart")
+        restartBtnEl.disabled = true;
+
+
         restartBtnEl.addEventListener("click", () => {
             count = 0;
             resultEl.innerHTML = "";
@@ -114,10 +141,53 @@
         const maxCount = 5;
         let count = 0;
         // 電腦給出的題目
-        let computer = 50;
+        let computer = getRandomInt(1, 50);
         console.log(resultEl, numberEl, answerBtnEl, restartBtnEl);
+        // 遊玩時間
+        // 猜錯了，次數
+        // 猜對了,次數
+        let records = []; //Array()
 
-    </script>
+
+
+        // records.push(["2024/8/10 16:00", "答對了", "3次"]);
+        // records.push(["2024/8/10 12:00", "答對了", "3次"]);
+        // records.push(["2024/8/10 15:00", "答對了", "3次"]);
+        // records.push(["2024/8/10 11:00", "答對了", "3次"]);
+
+        // console.log(records);
+        // console.log(records.length);
+        // for (let i = 0; i < records.length; i++) {
+        //     console.log(records[i][0]);
+
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+        // let x = 6.8;
+        // console.log(x, Math.floor(x), Math.ceil(x));
+        // // 0~9 =>1~10
+        // console.log(Math.floor(Math.random() * 10) + 1);
+        // console.log("---------------------");
+
+        // for (let i = 0; i < 10; i++) {
+        //     console.log(getRandomInt(0, 10));
+        // }
+        // 亂數function
+        function getRandomInt(start, end) {
+            return Math.floor(Math.random() * (end - start + 1)) + start;
+        }
+
+        </script>
 
 </body>
 
