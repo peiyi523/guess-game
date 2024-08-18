@@ -1,196 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>猜數字挑戰賽</title>
+    <title>猜數字挑戰</title>
+
 
     <style>
         body {
-            background-color: plum;
+            background-color: rgb(245, 245, 237);
             text-align: center;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        #light {
+            animation: blink 5s infinite;
+            color: brown;
+            font-size: 52px;
         }
 
         #result {
-            background-color: beige;
+            background-color: aliceblue;
+            color: orangered;
             width: 300px;
-            height: 150px;
-            margin: 12px auto;
-            border-radius: 12px;
-            border: 3px brown solid;
-            text-align: center;
             padding: 80px 0;
 
+            margin: 12px auto;
+            font-size: large;
+            border-radius: 12px;
+            border: 3px rgb(244, 41, 214) solid;
+            text-align: center;
+            font-size: 32px;
+            font-family: '微軟正黑體';
         }
 
-        .tips {
+        .hint {
+            background-color: rgb(219, 12, 12);
+            color: antiquewhite;
+            width: 150px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
             display: inline-block;
-            background-color: darkred;
-            color: aliceblue;
-            padding: 3px 3px;
+            font-size: 24px;
+        }
+
+        #number {
+            height: 24px;
+            background-color: lightyellow;
+        }
+
+        #answer {
+            background-color: orchid;
+            color: antiquewhite;
+            height: 28px;
         }
 
         #restart {
-            border: 0px;
-            background-color: chartreuse;
-            color: blue;
+            background-color: coral;
+            color: antiquewhite;
             padding: 4px 6px;
-            border-radius: 3px;
+            border-radius: 6px;
+            border: 3px rgb(158, 113, 53) solid;
+            padding: 6px 8px;
+            font-size: 16px;
         }
 
-        /* line-height是調顯示結果的位置 */
+        input {
+            text-align: center;
+        }
     </style>
-
-
-
-
 </head>
 
 <body>
-    <h1>猜數字挑戰賽!</h1>
-    <h3 class="tips">遊戲說明</h3><br>
-    <div>請猜1~50之間的數字,共有五次遊戲機會!</div>
+    <H1 id="light">猜數字挑戰賽！</H1>
+    <h3 class="hint">遊戲說明:</h3><br>
     <label for="number">請猜一個數字</label>
     <input type="number" id="number">
     <button id="answer" onclick="answer()">送出</button>
-    <div id="result"></div>
+    <div id="result">
+    </div>
     <button id="restart">重新開始</button>
     <h3 id="guess-count"></h3>
-    <hr>
-    <div style="background-color: aqua; color:rgb(34, 145, 145);">遊戲記錄:</div>
-    < <div>時間:2024/4/5<br>遊戲結果:猜對了!<br>次數:5次</div>
-        <hr>
-        <div>時間:2024/4/5<br>遊戲結果:猜對了!<br>次數:5次</div>
 
-        <script>
-            function showRecords() {
-                for (let i = 0; i < records.length; i++) {
-                    recordsEl.innerHTML += 1
-                        < hr >
-                        <div>時間:${records[i][0]}<br>
-                            遊戲結果:${records[i][1]}<br>
-                                次數:${records[i][2]}次</div>
-                            `;
-            }
 
-        }
 
-                            function answer() {
+
+    <script>
+        function answer() {
             if (count == maxCount) {
-                                resultEl.innerHTML = "請重新開始";
-                            restartBtnEl.didabled = false;
-                            return;
-            }
-                            let number = numberEl.value;
-                            // 輸入不能為空
-                            if (number == "") {
-                                resultEl.innerHTML = "輸入不能為空<br>"
+                resultEl.innerHTML = "請重新開始遊戲!"
                 return;
             }
-                            // 輸入要在1~50之間
-                            if (number < 1 || number > 50) {
-                                resultEl.innerHTML = "輸入要在1~50之間<br>"
+            let number = numberEl.value;
+            // 輸入不能為空
+            if (number == "") {
+                resultEl.innerHTML = "輸入不能為空";
                 return;
             }
-                            // 程式練習
-                            count++;
+            // 輸入要在1~50之間
+            if (number < 1 || number > 50) {
+                resultEl.innerHTML = "輸入要在1~50之間";
+                return;
+            }
 
-                            // 判斷是否猜對
-                            if (number == computer) {
-                                resultEl.innerHTML = "猜對了!";
-                            restartBtnEl.disabled = false;
-                            records.push([new Date().toLocaleString()]);
+            // 程式練習將次數進行累加
+            count++;
 
+            // 判斷是否猜對
+            if (number == computer) {
+                resultEl.innerHTML = "猜對了!";
             } else {
-                                guessCountEl.innerHTML = `猜錯${count}次`;
-                            if (count == maxCount)
-                            resultEl.innerHTML = `結束` < br > 答案為:${computer}`;
-                    resultEl.innerHTML+="<br>重新開始";
-                    restarBtnEl.disabled=false;
-
-
+                // 程式練習將猜錯次數進行提示
+                guessCountEl.innerHTML = `猜錯${count}次!`;
+                // 五次則結束遊戲,然後提示正確答案
+                if (count == maxCount) {
+                    resultEl.innerHTML = `遊戲結束<br>答案為:${computer}`;
                 }
 
-                if (number > computer) {
-                    resultEl.innerHTML = "猜低一點!<br>";
+                else if (number > computer) {
+                    resultEl.innerHTML = "猜低一點！";
                 } else {
-                    resultEl.innerHTML = "猜高一點!<br>";
+                    resultEl.innerHTML = "猜高一點！";
 
                 }
             }
         }
-        const numberEl = document.querySelector('#number');
+        // 顯示輸入數字
+        // alert(numberEl.value);
+
+
+
+        const numberEl = document.querySelector("#number");
         const answerBtnEl = document.querySelector("#answer");
-        const resultEl = document.querySelector("#result")
-        const gessCountEl = document.querySelector("#guess-count")
-        const restartBtnEl = document.querySelector("#restart")
-        restartBtnEl.disabled = true;
-
-
+        const resultEl = document.querySelector("#result");
+        const guessCountEl = document.querySelector('#guess-count');
+        const restartBtnEl = document.querySelector("#restart");
+        // addEventListener(參數1,參數2),參數1是監聽什麼動作(按鈕click或滑鼠mouse)
+        // javascript中的匿名函式寫法()=>{}
         restartBtnEl.addEventListener("click", () => {
             count = 0;
             resultEl.innerHTML = "";
-            gessCountEl.innerHTML = "";
-            numberEl.innerHTML = "";
-
+            guessCountEl.innerHTML = "";
+            numberEl.value = "";
         });
 
-
-        document.querySelector("#restart")
         const maxCount = 5;
         let count = 0;
-        // 電腦給出的題目
-        let computer = getRandomInt(1, 50);
+        // 電腦給出的數字
+        let computer = 50;
+
         console.log(resultEl, numberEl, answerBtnEl, restartBtnEl);
-        // 遊玩時間
-        // 猜錯了，次數
-        // 猜對了,次數
-        let records = []; //Array()
 
+    </script>
 
-
-        // records.push(["2024/8/10 16:00", "答對了", "3次"]);
-        // records.push(["2024/8/10 12:00", "答對了", "3次"]);
-        // records.push(["2024/8/10 15:00", "答對了", "3次"]);
-        // records.push(["2024/8/10 11:00", "答對了", "3次"]);
-
-        // console.log(records);
-        // console.log(records.length);
-        // for (let i = 0; i < records.length; i++) {
-        //     console.log(records[i][0]);
-
-        // }
-
-
-
-
-
-
-
-
-
-
-
-
-        // let x = 6.8;
-        // console.log(x, Math.floor(x), Math.ceil(x));
-        // // 0~9 =>1~10
-        // console.log(Math.floor(Math.random() * 10) + 1);
-        // console.log("---------------------");
-
-        // for (let i = 0; i < 10; i++) {
-        //     console.log(getRandomInt(0, 10));
-        // }
-        // 亂數function
-        function getRandomInt(start, end) {
-            return Math.floor(Math.random() * (end - start + 1)) + start;
-        }
-
-        </script>
 
 </body>
-
-
 
 </html>
