@@ -13,7 +13,7 @@
             text-align: center;
         }
 
-        @keyframes blink {
+        /* @keyframes blink {
 
             0%,
             100% {
@@ -29,7 +29,7 @@
             animation: blink 5s infinite;
             color: brown;
             font-size: 52px;
-        }
+        } */
 
         #result {
             background-color: aliceblue;
@@ -100,8 +100,8 @@
 
     <script>
         function answer() {
+
             if (count == maxCount) {
-                resultEl.innerHTML = "請重新開始遊戲!"
                 return;
             }
             let number = numberEl.value;
@@ -122,12 +122,15 @@
             // 判斷是否猜對
             if (number == computer) {
                 resultEl.innerHTML = "猜對了!";
+                restartBtnEl.disabled = false;
             } else {
                 // 程式練習將猜錯次數進行提示
                 guessCountEl.innerHTML = `猜錯${count}次!`;
                 // 五次則結束遊戲,然後提示正確答案
                 if (count == maxCount) {
                     resultEl.innerHTML = `遊戲結束<br>答案為:${computer}`;
+                    resultEl.innerHTML += "<br>請重新開始遊戲!";
+                    restartBtnEl.disabled = false;
                 }
 
                 else if (number > computer) {
@@ -150,6 +153,8 @@
         const restartBtnEl = document.querySelector("#restart");
         // addEventListener(參數1,參數2),參數1是監聽什麼動作(按鈕click或滑鼠mouse)
         // javascript中的匿名函式寫法()=>{}
+        restartBtnEl.disabled = true;
+
         restartBtnEl.addEventListener("click", () => {
             count = 0;
             resultEl.innerHTML = "";
@@ -160,9 +165,21 @@
         const maxCount = 5;
         let count = 0;
         // 電腦給出的數字
-        let computer = 50;
-
+        let computer = getRandomInt(1, 50);
         console.log(resultEl, numberEl, answerBtnEl, restartBtnEl);
+        // let x = 6.8;
+        // console.log(x, Math.floor(x), Math.ceil(x));
+        // // 0~9該如何變成1~10?
+        // console.log(Math.floor(Math.random() * 10) + 1);
+        // console.log('----------------------------------');
+
+        // for (let i = 0; i < 10; i++) {
+        //     console.log(getRandomInt(0, 10));
+        // }
+        // 亂數function
+        function getRandomInt(start, end) {
+            return Math.floor(Math.random() * (end - start + 1)) + start;
+        }
 
     </script>
 
