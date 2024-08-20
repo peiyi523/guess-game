@@ -94,11 +94,30 @@
     </div>
     <button id="restart">重新開始</button>
     <h3 id="guess-count"></h3>
-
-
-
-
+    遊戲記錄:
+    <p id="records"></p>
+    <!-- <div>時間:2024/4/5<br>遊戲結果:猜對了!<br>次數:5次</div>
+    <hr>
+    <div>時間:2024/4/5<br>遊戲結果:猜對了!<br>次數:5次</div> -->
     <script>
+        function showRecords() {
+            recordsEl.innerHTML = "";
+            for (let i = 0; i < records.length; i++) {
+                recordsEl.innerHTML += `
+                <hr>
+                <div>時間:${records[i][0]}<br>
+                    遊戲結果:${records[i][1]}<br>
+                    次數:${records[i][2]}次
+                </div>
+               `;
+            }
+
+
+
+        }
+
+
+
         function answer() {
 
             if (count == maxCount) {
@@ -123,6 +142,8 @@
             if (number == computer) {
                 resultEl.innerHTML = "猜對了!";
                 restartBtnEl.disabled = false;
+                records.push([new Date().toLocaleString(), "猜對了", count]);
+                showRecords();
             } else {
                 // 程式練習將猜錯次數進行提示
                 guessCountEl.innerHTML = `猜錯${count}次!`;
@@ -131,6 +152,8 @@
                     resultEl.innerHTML = `遊戲結束<br>答案為:${computer}`;
                     resultEl.innerHTML += "<br>請重新開始遊戲!";
                     restartBtnEl.disabled = false;
+                    records.push([new Date().toLocaleString(), "猜錯了", count]);
+                    showRecords();
                 }
 
                 else if (number > computer) {
@@ -151,6 +174,7 @@
         const resultEl = document.querySelector("#result");
         const guessCountEl = document.querySelector('#guess-count');
         const restartBtnEl = document.querySelector("#restart");
+        const recordsEl = document.querySelector("#records");
         // addEventListener(參數1,參數2),參數1是監聽什麼動作(按鈕click或滑鼠mouse)
         // javascript中的匿名函式寫法()=>{}
         restartBtnEl.disabled = true;
@@ -166,16 +190,20 @@
         let count = 0;
         // 電腦給出的數字
         let computer = getRandomInt(1, 50);
-        console.log(resultEl, numberEl, answerBtnEl, restartBtnEl);
-        // let x = 6.8;
-        // console.log(x, Math.floor(x), Math.ceil(x));
-        // // 0~9該如何變成1~10?
-        // console.log(Math.floor(Math.random() * 10) + 1);
-        // console.log('----------------------------------');
+        console.log(resultEl, numberEl, answerBtnEl, restartBtnEl, recordsEl);
 
-        // for (let i = 0; i < 10; i++) {
-        //     console.log(getRandomInt(0, 10));
-        // }
+        // 遊玩時間
+        // 猜對了，次數
+        // 猜錯了，次數
+
+        let records = []; //Array()陣列
+
+
+        console.log(new Date().toLocaleString());
+
+
+
+
         // 亂數function
         function getRandomInt(start, end) {
             return Math.floor(Math.random() * (end - start + 1)) + start;
