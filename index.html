@@ -182,6 +182,7 @@
 
         restartBtnEl.addEventListener("click", () => {
             count = 0;
+            computer = getRandomInt(1, 50);
             resultEl.innerHTML = "";
             guessCountEl.innerHTML = "";
             numberEl.value = "";
